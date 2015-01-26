@@ -79,6 +79,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 				OnPropertyChanged();
 			}
 		}
+
 		private bool isSolutionAvailable;
 
 		public void ClearData()

@@ -40,14 +40,20 @@ namespace BetterConfigurationManager.MainToolWindow
 				new DteInitializer(shellService, InitializeDte);
 			}
 			else
+			{
 				// ReSharper disable once MaximumChainedReferences
-				dte.Events.DTEEvents.OnStartupComplete += VisualStudioStartupComplete;
+				dte.Events.DTEEvents.OnStartupComplete += TryInitializeVisualStudioConfigurationManager;
+				TryInitializeVisualStudioConfigurationManager();
+			}
 		}
 
 		private DTE2 dte;
 
-		private void VisualStudioStartupComplete()
+		private void TryInitializeVisualStudioConfigurationManager()
 		{
+			if (dte == null)
+				return;
+			dte.Events.DTEEvents.OnStartupComplete -= TryInitializeVisualStudioConfigurationManager;
 			var configurationManager = (VisualStudioConfigurationManager)viewModel.ConfigurationManager;
 			configurationManager.SetDte(dte);
 		}

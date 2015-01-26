@@ -61,7 +61,7 @@
 				<Image
 					RenderOptions.EdgeMode="Aliased"
 					RenderOptions.BitmapScalingMode="Fant"
-					Source="../Resources/ReloadIcon.png" />
+					Source="pack://application:,,,/BetterConfigurationManager;component/Resources/ReloadIcon.png" />
 			</Button>
 		</Grid>
 		<DataGrid

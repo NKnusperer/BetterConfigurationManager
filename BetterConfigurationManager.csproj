@@ -167,9 +167,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\EuropeanUnionPublicLicence.rtf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Content Include="Resources\EuropeanUnionPublicLicence.rtf">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Resource Include="Resources\ReloadIcon.png" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -184,7 +184,9 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images.png" />
+    <Content Include="Resources\Images.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainToolWindow\MainToolWindowView.xaml">
@@ -197,10 +199,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\CommandIcon.png" />
-    <Resource Include="Resources\Package.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Content Include="Resources\CommandIcon.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\Package.ico">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
