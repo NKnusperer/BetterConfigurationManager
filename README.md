@@ -11,6 +11,8 @@ Easy-to-use Configuration Manager for Visual Studio 2012/2013. Better Configurat
   * Every Solution Configuration and/or Platform
  - It's fast! Click trough different configurations and change settings in milliseconds.
 
+##### Get it from the [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/d9552425-000f-468e-8b80-1c86447a5fb8) or the [release section](https://github.com/NKnusperer/BetterConfigurationManager/releases).
+
 ### Screenshots
 ![Image of Better Configuration Manager](http://abload.de/img/previewimageyou3r.png)
 ![Context Menu](http://abload.de/img/contextmenu00uzg.png)
