@@ -40,8 +40,8 @@
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
-			<TextBlock Grid.Column="0" Grid.Row="0" Text="Solution configuration:" />
-			<TextBlock Grid.Column="1" Grid.Row="0" Text="Solution platform:" />
+			<TextBlock Grid.Column="0" Grid.Row="0" Text="Solution Configuration:" />
+			<TextBlock Grid.Column="1" Grid.Row="0" Text="Solution Platform:" />
 			<ComboBox
 				Grid.Column="0"
 				Grid.Row="1"
@@ -299,5 +299,22 @@
 				</DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
+		<TextBlock 
+			Grid.Row="1" 
+			FontFamily="Courier New"
+			Foreground="Black"
+			Text="{Binding ConfigurationManager.StatusText}"
+			HorizontalAlignment="Center" 
+			VerticalAlignment="Center">
+			<TextBlock.Style>
+				<Style TargetType="TextBlock">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding ConfigurationManager.ShowStatusText}" Value="False">
+							<Setter Property="Visibility" Value="Collapsed" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
 	</Grid>
 </UserControl>

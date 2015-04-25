@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace BetterConfigurationManager.ConfigurationManager
 {
@@ -82,6 +83,30 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		private bool isSolutionAvailable;
 
+		public string StatusText
+		{
+			get { return statusText; }
+			set
+			{
+				statusText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private string statusText;
+
+		public bool ShowStatusText
+		{
+			get { return showStatusText; }
+			set
+			{
+				showStatusText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private bool showStatusText;
+
 		public void ClearData()
 		{
 			ActiveSolutionPlatform = null;
@@ -92,6 +117,6 @@ namespace BetterConfigurationManager.ConfigurationManager
 			IsSolutionAvailable = false;
 		}
 
-		public virtual void Reload() {}
+		public abstract Task Reload();
 	}
 }

@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using BetterConfigurationManager.Annotations;
 
 namespace BetterConfigurationManager
@@ -12,8 +14,10 @@ namespace BetterConfigurationManager
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChangedEventHandler handler = PropertyChanged;
-			if (handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			if (handler == null)
+				return;
+			Action handlerAction = () => handler(this, new PropertyChangedEventArgs(propertyName));
+			Application.Current.Dispatcher.InvokeAsync(handlerAction);
 		}
 	}
 }

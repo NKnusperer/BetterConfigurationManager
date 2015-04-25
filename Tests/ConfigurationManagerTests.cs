@@ -1,4 +1,5 @@
-﻿using BetterConfigurationManager.ConfigurationManager;
+﻿using System.Threading.Tasks;
+using BetterConfigurationManager.ConfigurationManager;
 using NUnit.Framework;
 
 namespace BetterConfigurationManager.Tests
@@ -33,6 +34,11 @@ namespace BetterConfigurationManager.Tests
 					AvailableProjectPlatforms = new[] { "Any CPU" }
 				});
 				Projects.Add(firstProject);
+			}
+
+			public override Task Reload()
+			{
+				return null;
 			}
 		}
 

@@ -11,7 +11,7 @@ namespace BetterConfigurationManager
 			this.canExecute = canExecute;
 		}
 
-		private readonly Action<T> action;
+		protected readonly Action<T> action;
 		private readonly Predicate<T> canExecute;
 
 		public event EventHandler CanExecuteChanged
@@ -28,12 +28,12 @@ namespace BetterConfigurationManager
 			}
 		}
 
-		public bool CanExecute(object parameter)
+		public virtual bool CanExecute(object parameter)
 		{
 			return canExecute == null || canExecute((T)parameter);
 		}
 
-		public void Execute(object parameter)
+		public virtual void Execute(object parameter)
 		{
 			action((T)parameter);
 		}

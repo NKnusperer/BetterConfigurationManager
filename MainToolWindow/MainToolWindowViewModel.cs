@@ -18,7 +18,7 @@ namespace BetterConfigurationManager.MainToolWindow
 			SetShouldDeployProjectsCommand = new RelayCommand<PropertyMarkerAction>(SetShouldDeployProjects);
 			SetProjectsConfigurationCommand = new RelayCommand<PropertyMarkerAction>(SetProjectsConfiguration);
 			SetProjectsPlatformCommand = new RelayCommand<PropertyMarkerAction>(SetProjectsPlatform);
-			ReloadCommand = new RelayCommand(() => configurationManager.Reload());
+			ReloadCommand = new RelayCommand(async () => await configurationManager.Reload());
 		}
 
 		public ICommand ShouldBuildProjectChangedCommand { get; private set; }

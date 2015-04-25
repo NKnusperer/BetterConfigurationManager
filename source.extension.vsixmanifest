@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 	<Metadata>
-		<Identity Id="f2e704b7-483a-41ee-9b77-c68e6ebe5cf5" Version="1.0" Language="en-US" Publisher="Hendrik Müller" />
+		<Identity Id="f2e704b7-483a-41ee-9b77-c68e6ebe5cf5" Version="1.1" Language="en-US" Publisher="Hendrik Müller" />
 		<DisplayName>Better Configuration Manager</DisplayName>
 		<Description xml:space="preserve">The Configuration Manager you always wanted since 2003.</Description>
 		<MoreInfo>https://github.com/NKnusperer/BetterConfigurationManager</MoreInfo>

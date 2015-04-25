@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 namespace BetterConfigurationManager
 {
 	[PackageRegistration(UseManagedResourcesOnly = true),
-	InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400),
+	InstalledProductRegistration("#110", "#112", "1.1", IconResourceID = 400),
 	ProvideMenuResource("Menus.ctmenu", 1),
 	ProvideToolWindow(typeof(MainToolWindowInitialize), Style = VsDockStyle.MDI, MultiInstances = false),
 	Guid(Guids.BetterConfigurationManagerPackageId)]

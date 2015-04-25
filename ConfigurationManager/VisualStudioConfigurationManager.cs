@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using EnvDTE;
 using EnvDTE80;
 
@@ -7,18 +9,15 @@ namespace BetterConfigurationManager.ConfigurationManager
 {
 	public class VisualStudioConfigurationManager : ConfigurationManager
 	{
-		public override void Reload()
+		public override async Task Reload()
 		{
 			ClearData();
-			LoadConfigurations();
-		}
-
-		private void LoadConfigurations()
-		{
+			ShowStatusText = true;
 			SetAvailableConfigurations();
 			SetActiveConfiguration();
-			SetProjects();
+			await SetProjects();
 			FireSolutionContextChanged();
+			ShowStatusText = false;
 			IsSolutionAvailable = true;
 		}
 
@@ -46,19 +45,32 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		private void SetActiveConfiguration()
 		{
+			StatusText = "Getting active solution configurations...";
 			var solutionConfiguration =
 				(SolutionConfiguration2)dte.Solution.SolutionBuild.ActiveConfiguration;
 			ActiveSolutionPlatform = solutionConfiguration.PlatformName;
 			ActiveSolutionConfiguration = solutionConfiguration.Name;
 		}
 
-		private void SetProjects()
+		private async Task SetProjects()
 		{
-			SolutionConfigurations solutionConfigurations = GetSolutionConfigurations();
-			var nativeProjects = new List<EnvDTE.Project>();
-			NavigateSolution(nativeProjects);
-			foreach (EnvDTE.Project nativeProject in nativeProjects.OrderBy(p => p.Name))
-				Projects.Add(new VisualStudioProject(nativeProject, solutionConfigurations));
+			var loadedProjects = new List<Project>();
+			await Task.Run(() =>
+			{
+				SolutionConfigurations solutionConfigurations = GetSolutionConfigurations();
+				var nativeProjects = new List<EnvDTE.Project>();
+				NavigateSolution(nativeProjects);
+				nativeProjects = nativeProjects.OrderBy(p => p.Name).ToList();
+				foreach (var nativeProject in nativeProjects.Select((x, i) => new { Value = x, Index = i })
+					)
+				{
+					StatusText = FormatProjectLoadingMessage(nativeProjects.Count, nativeProject.Index,
+						nativeProject.Value.Name);
+					loadedProjects.Add(new VisualStudioProject(nativeProject.Value, solutionConfigurations));
+				}
+			});
+			foreach (Project loadedProject in loadedProjects)
+				Projects.Add(loadedProject);
 			UpdateProjectsSolutionContext();
 		}
 
@@ -87,14 +99,31 @@ namespace BetterConfigurationManager.ConfigurationManager
 					NavigateProject(nativeProjectItem.SubProject, nativeProjects);
 		}
 
-		public void SetDte(DTE2 dte)
+		private static string FormatProjectLoadingMessage(int availableProjectsCount,
+			int currentProjectIndex, string currentProjectname)
+		{
+			string header = CenterString(string.Format("Loading Project {0}/{1}:", currentProjectIndex, 
+				availableProjectsCount), currentProjectname.Length);
+			return header + Environment.NewLine + CenterString(currentProjectname, header.Length);
+		}
+
+		private static string CenterString(string input, int width)
+		{
+			if (input.Length >= width)
+				return input;
+			int leftPadding = (width - input.Length) / 2;
+			int rightPadding = width - input.Length - leftPadding;
+			return new string(' ', leftPadding) + input + new string(' ', rightPadding);
+		}
+
+		public async Task SetDte(DTE2 dte)
 		{
 			this.dte = dte;
 			solutionEvents = this.dte.Events.SolutionEvents;
-			solutionEvents.Opened += LoadConfigurations;
+			solutionEvents.Opened += async () => await Reload();
 			solutionEvents.AfterClosing += OnSolutionClosing;
 			if (this.dte.Solution.IsOpen)
-				LoadConfigurations();
+				await Reload();
 		}
 
 		private SolutionEvents solutionEvents;

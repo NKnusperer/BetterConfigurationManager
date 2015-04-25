@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BetterConfigurationManager.ConfigurationManager;
 using BetterConfigurationManager.MainToolWindow;
 using NUnit.Framework;
@@ -54,6 +55,11 @@ namespace BetterConfigurationManager.Tests
 				}
 				ActiveSolutionConfiguration = "Debug";
 				ActiveSolutionPlatform = "Any CPU";
+			}
+
+			public override Task Reload()
+			{
+				return null;
 			}
 		}
 

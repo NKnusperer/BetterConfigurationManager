@@ -22,40 +22,44 @@ namespace BetterConfigurationManager.MainToolWindow
 			base.Content = view;
 		}
 
-
 		private readonly MainToolWindowViewModel viewModel;
 
-		public override void OnToolWindowCreated()
+		public override async void OnToolWindowCreated()
 		{
 			base.OnToolWindowCreated();
-			InitializeDte();
+			await InitializeDte();
 		}
 
-		private void InitializeDte()
+		private async System.Threading.Tasks.Task InitializeDte()
 		{
 			dte = GetService(typeof(SDTE)) as DTE2;
 			if (dte == null) // The IDE is not yet fully initialized
 			{
 				var shellService = GetService(typeof(SVsShell)) as IVsShell;
-				new DteInitializer(shellService, InitializeDte);
+				new DteInitializer(shellService, async () => await InitializeDte());
 			}
 			else
 			{
 				// ReSharper disable once MaximumChainedReferences
-				dte.Events.DTEEvents.OnStartupComplete += TryInitializeVisualStudioConfigurationManager;
-				TryInitializeVisualStudioConfigurationManager();
+				dte.Events.DTEEvents.OnStartupComplete += OnDteEventsStartupComplete;
+				await TryInitializeVisualStudioConfigurationManager();
 			}
 		}
 
 		private DTE2 dte;
 
-		private void TryInitializeVisualStudioConfigurationManager()
+		private async void OnDteEventsStartupComplete()
+		{
+			await TryInitializeVisualStudioConfigurationManager();
+		}
+
+		private async System.Threading.Tasks.Task TryInitializeVisualStudioConfigurationManager()
 		{
 			if (dte == null)
 				return;
-			dte.Events.DTEEvents.OnStartupComplete -= TryInitializeVisualStudioConfigurationManager;
+			dte.Events.DTEEvents.OnStartupComplete -= OnDteEventsStartupComplete;
 			var configurationManager = (VisualStudioConfigurationManager)viewModel.ConfigurationManager;
-			configurationManager.SetDte(dte);
+			await configurationManager.SetDte(dte);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using BetterConfigurationManager.ConfigurationManager;
+﻿using System.Threading.Tasks;
+using BetterConfigurationManager.ConfigurationManager;
 
 namespace BetterConfigurationManager.MainToolWindow
 {
@@ -18,6 +19,8 @@ namespace BetterConfigurationManager.MainToolWindow
 				AvailableSolutionPlatforms.Add("Any CPU");
 				ActiveSolutionConfiguration = "Debug";
 				ActiveSolutionPlatform = "Any CPU";
+				ShowStatusText = true;
+				StatusText = "Loading...";
 
 				var firstProject = new Project { Name = "Namespace.FirstProject" };
 				firstProject.ActiveConfiguration = new Configuration
@@ -46,6 +49,11 @@ namespace BetterConfigurationManager.MainToolWindow
 					ShouldDeploy = true
 				};
 				Projects.Add(secondProject);
+			}
+
+			public override Task Reload()
+			{
+				return null;
 			}
 		}
 	}
