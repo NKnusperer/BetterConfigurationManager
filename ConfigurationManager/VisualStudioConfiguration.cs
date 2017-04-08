@@ -29,10 +29,8 @@ namespace BetterConfigurationManager.ConfigurationManager
 			AvailableProjectPlatforms = ObjectToStringArray(nativeConfigurationManager.PlatformNames);
 		}
 
-		private static IEnumerable<string> ObjectToStringArray(object obj)
-		{
-			return ((IEnumerable)obj).Cast<object>().Select(x => x.ToString());
-		}
+		private static IEnumerable<string> ObjectToStringArray(object obj) 
+			=> ((IEnumerable)obj).Cast<object>().Select(x => x.ToString());
 
 		private void SetIsBuildableAndIsDeployable()
 		{
@@ -45,12 +43,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public override string ProjectPlatform
 		{
-			get
-			{
-				if (base.ProjectPlatform == null)
-					base.ProjectPlatform = solutionContext.PlatformName;
-				return base.ProjectPlatform;
-			}
+			get => base.ProjectPlatform ?? (base.ProjectPlatform = solutionContext.PlatformName);
 			set
 			{
 				if (base.ProjectPlatform == value)
@@ -62,12 +55,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 		}
 		public override string ProjectConfiguration
 		{
-			get
-			{
-				if (base.ProjectConfiguration == null)
-					base.ProjectConfiguration = solutionContext.ConfigurationName;
-				return base.ProjectConfiguration;
-			}
+			get => base.ProjectConfiguration ?? (base.ProjectConfiguration = solutionContext.ConfigurationName);
 			set
 			{
 				if (base.ProjectConfiguration == value)
@@ -80,7 +68,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public override bool ShouldDeploy
 		{
-			get { return solutionContext.ShouldDeploy; }
+			get => solutionContext.ShouldDeploy;
 			set
 			{
 				solutionContext.ShouldDeploy = value;
@@ -89,7 +77,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 		}
 		public override bool ShouldBuild
 		{
-			get { return solutionContext.ShouldBuild; }
+			get => solutionContext.ShouldBuild;
 			set
 			{
 				solutionContext.ShouldBuild = value;

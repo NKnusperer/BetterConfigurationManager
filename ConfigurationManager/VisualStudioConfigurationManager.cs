@@ -61,8 +61,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 				var nativeProjects = new List<EnvDTE.Project>();
 				NavigateSolution(nativeProjects);
 				nativeProjects = nativeProjects.OrderBy(p => p.Name).ToList();
-				foreach (var nativeProject in nativeProjects.Select((x, i) => new { Value = x, Index = i })
-					)
+				foreach (var nativeProject in nativeProjects.Select((x, i) => new { Value = x, Index = i }))
 				{
 					StatusText = FormatProjectLoadingMessage(nativeProjects.Count, nativeProject.Index,
 						nativeProject.Value.Name);
@@ -100,11 +99,11 @@ namespace BetterConfigurationManager.ConfigurationManager
 		}
 
 		private static string FormatProjectLoadingMessage(int availableProjectsCount,
-			int currentProjectIndex, string currentProjectname)
+			int currentProjectIndex, string currentProjectName)
 		{
-			string header = CenterString(string.Format("Loading Project {0}/{1}:", currentProjectIndex, 
-				availableProjectsCount), currentProjectname.Length);
-			return header + Environment.NewLine + CenterString(currentProjectname, header.Length);
+			string header = CenterString($"Loading Project {currentProjectIndex}/{availableProjectsCount}:",
+				currentProjectName.Length);
+			return header + Environment.NewLine + CenterString(currentProjectName, header.Length);
 		}
 
 		private static string CenterString(string input, int width)
@@ -128,9 +127,6 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		private SolutionEvents solutionEvents;
 
-		private void OnSolutionClosing()
-		{
-			ClearData();
-		}
+		private void OnSolutionClosing() => ClearData();
 	}
 }

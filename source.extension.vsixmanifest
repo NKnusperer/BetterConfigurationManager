@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 	<Metadata>
-		<Identity Id="f2e704b7-483a-41ee-9b77-c68e6ebe5cf5" Version="1.1" Language="en-US" Publisher="Hendrik Müller" />
+		<Identity Id="f2e704b7-483a-41ee-9b77-c68e6ebe5cf5" Version="1.2" Language="en-US" Publisher="Hendrik Müller" />
 		<DisplayName>Better Configuration Manager</DisplayName>
 		<Description xml:space="preserve">The Configuration Manager you always wanted since 2003.</Description>
 		<MoreInfo>https://github.com/NKnusperer/BetterConfigurationManager</MoreInfo>
@@ -10,9 +10,14 @@
 		<Icon>Resources\Package.ico</Icon>
 		<Tags>configuration manager</Tags>
 	</Metadata>
-	<Installation InstalledByMsi="false">
+	<Installation>
 		<InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[11.0,]" />
+		<InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[11.0,]" />
+		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,]" />
 	</Installation>
+	<Prerequisites>
+		<Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+	</Prerequisites>
 	<Dependencies>
 		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
 		<Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="[11.0,]" />

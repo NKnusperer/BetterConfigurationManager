@@ -36,10 +36,7 @@ namespace BetterConfigurationManager.Tests
 				Projects.Add(firstProject);
 			}
 
-			public override Task Reload()
-			{
-				return null;
-			}
+			public override Task Reload() => null;
 		}
 
 		[Test]

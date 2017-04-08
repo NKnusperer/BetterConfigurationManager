@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using BetterConfigurationManager.Annotations;
 
+
 namespace BetterConfigurationManager
 {
 	public abstract class PropertyChangedBase : INotifyPropertyChanged

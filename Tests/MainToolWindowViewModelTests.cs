@@ -57,10 +57,7 @@ namespace BetterConfigurationManager.Tests
 				ActiveSolutionPlatform = "Any CPU";
 			}
 
-			public override Task Reload()
-			{
-				return null;
-			}
+			public override Task Reload() => null;
 		}
 
 		[Test]

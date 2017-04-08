@@ -13,14 +13,14 @@ namespace BetterConfigurationManager.ConfigurationManager
 			Projects = new ObservableCollection<Project>();
 		}
 
-		public ObservableCollection<string> AvailableSolutionConfigurations { get; private set; }
-		public ObservableCollection<string> AvailableSolutionPlatforms { get; private set; }
-		public ObservableCollection<Project> Projects { get; private set; }
+		public ObservableCollection<string> AvailableSolutionConfigurations { get; }
+		public ObservableCollection<string> AvailableSolutionPlatforms { get; }
+		public ObservableCollection<Project> Projects { get; }
 		public event Action SolutionContextChanged;
 
 		public string ActiveSolutionConfiguration
 		{
-			get { return activeSolutionConfiguration; }
+			get => activeSolutionConfiguration;
 			set
 			{
 				activeSolutionConfiguration = value;
@@ -40,18 +40,12 @@ namespace BetterConfigurationManager.ConfigurationManager
 				project.SetSolutionContext(ActiveSolutionConfiguration, ActiveSolutionPlatform);
 		}
 
-		public bool ValidSolutionContextSet
-		{
-			get
-			{
-				return Projects.Count > 0 && ActiveSolutionConfiguration != null &&
-							ActiveSolutionPlatform != null;
-			}
-		}
+		public bool ValidSolutionContextSet 
+			=> Projects.Count > 0 && ActiveSolutionConfiguration != null && ActiveSolutionPlatform != null;
 
 		public string ActiveSolutionPlatform
 		{
-			get { return activeSolutionPlatform; }
+			get => activeSolutionPlatform;
 			set
 			{
 				activeSolutionPlatform = value;
@@ -67,13 +61,12 @@ namespace BetterConfigurationManager.ConfigurationManager
 		{
 			if (!ValidSolutionContextSet)
 				return;
-			if (SolutionContextChanged != null)
-				SolutionContextChanged();
+			SolutionContextChanged?.Invoke();
 		}
 
 		public bool IsSolutionAvailable
 		{
-			get { return isSolutionAvailable; }
+			get => isSolutionAvailable;
 			set
 			{
 				isSolutionAvailable = value;
@@ -85,7 +78,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public string StatusText
 		{
-			get { return statusText; }
+			get => statusText;
 			set
 			{
 				statusText = value;
@@ -97,7 +90,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public bool ShowStatusText
 		{
-			get { return showStatusText; }
+			get => showStatusText;
 			set
 			{
 				showStatusText = value;

@@ -9,10 +9,8 @@ namespace BetterConfigurationManager.Behaviors
 {
 	public class ComboBoxBehaviors : DependencyObject
 	{
-		public static ICommand GetCommand(DependencyObject dependencyObject)
-		{
-			return (ICommand)dependencyObject.GetValue(CommandProperty);
-		}
+		public static ICommand GetCommand(DependencyObject dependencyObject) 
+			=> (ICommand)dependencyObject.GetValue(CommandProperty);
 
 		public static readonly DependencyProperty CommandProperty =
 			DependencyProperty.RegisterAttached("Command", typeof(ICommand),
@@ -29,17 +27,12 @@ namespace BetterConfigurationManager.Behaviors
 		private static void SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var selector = (Selector)sender;
-			if (selector == null)
-				return;
-			var command = selector.GetValue(CommandProperty) as ICommand;
-			if (command != null)
-				command.Execute(selector.SelectedItem);
+			var command = selector?.GetValue(CommandProperty) as ICommand;
+			command?.Execute(selector.SelectedItem);
 		}
 
-		public static void SetCommand(DependencyObject dependencyObject, ICommand command)
-		{
-			dependencyObject.SetValue(CommandProperty, command);
-		}
+		public static void SetCommand(DependencyObject dependencyObject, ICommand command) 
+			=> dependencyObject.SetValue(CommandProperty, command);
 
 		public static readonly DependencyProperty DefaultTextProperty =
 			DependencyProperty.RegisterAttached("DefaultText", typeof(string),
@@ -58,19 +51,17 @@ namespace BetterConfigurationManager.Behaviors
 		{
 			var comboBox = (ComboBox)dependencyObject;
 			RefreshDefaultText(comboBox, value);
-			comboBox.SelectionChanged += (sender, args) => 
+			comboBox.SelectionChanged += (sender, args) =>
 				RefreshDefaultText((ComboBox)sender, GetDefaultText((ComboBox)sender));
 			dependencyObject.SetValue(DefaultTextProperty, value);
 		}
 
-		public static String GetDefaultText(DependencyObject dependencyObject)
-		{
-			return (String)dependencyObject.GetValue(DefaultTextProperty);
-		}
+		public static string GetDefaultText(DependencyObject dependencyObject) 
+			=> (string)dependencyObject.GetValue(DefaultTextProperty);
 
 		private static void RefreshDefaultText(ComboBox combo, string text)
 		{
-			if (combo.SelectedIndex == -1 && !String.IsNullOrEmpty(text))
+			if (combo.SelectedIndex == -1 && !string.IsNullOrEmpty(text))
 			{
 				// Show DefaultText
 				var visual = new TextBlock

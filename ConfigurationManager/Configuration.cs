@@ -6,7 +6,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 	{
 		public virtual string ProjectConfiguration
 		{
-			get { return projectConfiguration; }
+			get => projectConfiguration;
 			set
 			{
 				projectConfiguration = value;
@@ -18,7 +18,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public virtual string ProjectPlatform
 		{
-			get { return projectPlatform; }
+			get => projectPlatform;
 			set
 			{
 				projectPlatform = value;
@@ -36,7 +36,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public bool IsDeployable
 		{
-			get { return isDeployable; }
+			get => isDeployable;
 			set
 			{
 				isDeployable = value;
@@ -48,7 +48,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public virtual bool ShouldDeploy
 		{
-			get { return shouldDeploy; }
+			get => shouldDeploy;
 			set
 			{
 				shouldDeploy = value;
@@ -60,7 +60,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public bool IsBuildable
 		{
-			get { return isBuildable; }
+			get => isBuildable;
 			set
 			{
 				isBuildable = value;
@@ -72,7 +72,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public virtual bool ShouldBuild
 		{
-			get { return shouldBuild; }
+			get => shouldBuild;
 			set
 			{
 				shouldBuild = value;

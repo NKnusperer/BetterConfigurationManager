@@ -10,11 +10,11 @@ namespace BetterConfigurationManager.ConfigurationManager
 			AvailableConfigurations = new List<Configuration>();
 		}
 
-		public List<Configuration> AvailableConfigurations { get; private set; }
+		public List<Configuration> AvailableConfigurations { get; }
 
 		public string Name
 		{
-			get { return name; }
+			get => name;
 			set
 			{
 				name = value;
@@ -26,7 +26,7 @@ namespace BetterConfigurationManager.ConfigurationManager
 
 		public Configuration ActiveConfiguration
 		{
-			get { return activeConfiguration; }
+			get => activeConfiguration;
 			set
 			{
 				activeConfiguration = value;
@@ -37,10 +37,8 @@ namespace BetterConfigurationManager.ConfigurationManager
 		private Configuration activeConfiguration;
 
 		public void SetSolutionContext(string solutionConfiguration, string solutionPlatform)
-		{
-			ActiveConfiguration = AvailableConfigurations.FirstOrDefault(c =>
-				c.SolutionConfiguration == solutionConfiguration &&
+			=> ActiveConfiguration = AvailableConfigurations
+			.FirstOrDefault(c => c.SolutionConfiguration == solutionConfiguration &&
 				c.SolutionPlatform == solutionPlatform);
-		}
 	}
 }

@@ -11,7 +11,7 @@ namespace BetterConfigurationManager
 			this.canExecute = canExecute;
 		}
 
-		protected readonly Action<T> action;
+		private readonly Action<T> action;
 		private readonly Predicate<T> canExecute;
 
 		public event EventHandler CanExecuteChanged
@@ -42,6 +42,6 @@ namespace BetterConfigurationManager
 	public class RelayCommand : RelayCommand<object>
 	{
 		public RelayCommand(Action action)
-			: base(delegate { action(); }, null) {}
+			: base(t => action()) { }
 	}
 }

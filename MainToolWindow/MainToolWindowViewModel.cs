@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using BetterConfigurationManager.ConfigurationManager;
 
+// ReSharper disable ExplicitCallerInfoArgument
 namespace BetterConfigurationManager.MainToolWindow
 {
 	public class MainToolWindowViewModel : PropertyChangedBase
@@ -21,42 +22,32 @@ namespace BetterConfigurationManager.MainToolWindow
 			ReloadCommand = new RelayCommand(async () => await configurationManager.Reload());
 		}
 
-		public ICommand ShouldBuildProjectChangedCommand { get; private set; }
+		public ICommand ShouldBuildProjectChangedCommand { get; }
 
-		private void ShouldBuildProjectChanged()
-		{
-			OnPropertyChanged("BuildEveryProjectInCurrentSolutionContext");
-		}
+		private void ShouldBuildProjectChanged() 
+			=> OnPropertyChanged(nameof(BuildEveryProjectInCurrentSolutionContext));
 
-		public ICommand ShouldDeployProjectChangedCommand { get; private set; }
+		public ICommand ShouldDeployProjectChangedCommand { get; }
 
-		private void ShouldDeployProjectChanged()
-		{
-			OnPropertyChanged("DeployEveryProjectInCurrentSolutionContext");
-		}
+		private void ShouldDeployProjectChanged() 
+			=> OnPropertyChanged(nameof(DeployEveryProjectInCurrentSolutionContext));
 
-		public ICommand ProjectConfigurationChangedCommand { get; private set; }
+		public ICommand ProjectConfigurationChangedCommand { get; }
 
-		private void ProjectConfigurationChanged()
-		{
-			OnPropertyChanged("ConfigurationForEveryProjectInCurrentSolutionContext");
-		}
+		private void ProjectConfigurationChanged() 
+			=> OnPropertyChanged(nameof(ConfigurationForEveryProjectInCurrentSolutionContext));
 
-		public ICommand ProjectPlatformChangedCommand { get; private set; }
+		public ICommand ProjectPlatformChangedCommand { get; }
 
-		private void ProjectPlatformChanged()
-		{
-			OnPropertyChanged("PlatformForEveryProjectInCurrentSolutionContext");
-		}
+		private void ProjectPlatformChanged() 
+			=> OnPropertyChanged(nameof(PlatformForEveryProjectInCurrentSolutionContext));
 
-		public ICommand SetShouldBuildProjectsCommand { get; private set; }
+		public ICommand SetShouldBuildProjectsCommand { get; }
 
-		public void SetShouldBuildProjects(PropertyMarkerAction action)
-		{
-			ApplyAction(action, (project, configuration) => configuration.IsBuildable,
+		public void SetShouldBuildProjects(PropertyMarkerAction action) 
+			=> ApplyAction(action, (project, configuration) => configuration.IsBuildable,
 				(project, configuration) =>	configuration.ShouldBuild = 
 					project.ActiveConfiguration.ShouldBuild);
-		}
 
 		private void ApplyAction(PropertyMarkerAction action,
 			Func<Project, Configuration, bool> canApplyAction, Action<Project, Configuration> applyAction)
@@ -84,7 +75,7 @@ namespace BetterConfigurationManager.MainToolWindow
 				return c => c.SolutionConfiguration == action.ApplyForSelectedSolutionConfigurationInCurrentSolutionPlatform &&
 					c.SolutionPlatform == configurationManager.ActiveSolutionPlatform;
 			if (action.ApplyForEverySolutionConfigurationAndPlatform)
-				return delegate { return true; };
+				return _ => true;
 			throw new ArgumentException("action");
 		}
 
@@ -105,42 +96,36 @@ namespace BetterConfigurationManager.MainToolWindow
 					applyAction(configuration);
 		}
 
-		public ICommand SetShouldDeployProjectsCommand { get; private set; }
+		public ICommand SetShouldDeployProjectsCommand { get; }
 
-		public void SetShouldDeployProjects(PropertyMarkerAction action)
-		{
-			ApplyAction(action, (project, configuration) => configuration.IsDeployable,
+		public void SetShouldDeployProjects(PropertyMarkerAction action) 
+			=> ApplyAction(action, (project, configuration) => configuration.IsDeployable,
 				(project, configuration) => configuration.ShouldDeploy = 
 					project.ActiveConfiguration.ShouldDeploy);
-		}
 
-		public ICommand SetProjectsConfigurationCommand { get; private set; }
+		public ICommand SetProjectsConfigurationCommand { get; }
 
-		public void SetProjectsConfiguration(PropertyMarkerAction action)
-		{
-			ApplyAction(action, (project, configuration) => 
+		public void SetProjectsConfiguration(PropertyMarkerAction action) 
+			=> ApplyAction(action, (project, configuration) => 
 				configuration.AvailableProjectConfigurations.
-				Contains(project.ActiveConfiguration.ProjectConfiguration),
-				(project, configuration) => configuration.ProjectConfiguration = 
-					project.ActiveConfiguration.ProjectConfiguration);
-		}
+					Contains(project.ActiveConfiguration.ProjectConfiguration),
+			(project, configuration) => configuration.ProjectConfiguration = 
+				project.ActiveConfiguration.ProjectConfiguration);
 
-		public ICommand SetProjectsPlatformCommand { get; private set; }
+		public ICommand SetProjectsPlatformCommand { get; }
 
-		public void SetProjectsPlatform(PropertyMarkerAction action)
-		{
-			ApplyAction(action, (project, configuration) =>
+		public void SetProjectsPlatform(PropertyMarkerAction action) 
+			=> ApplyAction(action, (project, configuration) =>
 				configuration.AvailableProjectPlatforms.
-				Contains(project.ActiveConfiguration.ProjectPlatform),
-				(project, configuration) => configuration.ProjectPlatform =
-					project.ActiveConfiguration.ProjectPlatform);
-		}
+					Contains(project.ActiveConfiguration.ProjectPlatform),
+			(project, configuration) => configuration.ProjectPlatform =
+				project.ActiveConfiguration.ProjectPlatform);
 
-		public ICommand ReloadCommand { get; private set; }
+		public ICommand ReloadCommand { get; }
 
 		public ConfigurationManager.ConfigurationManager ConfigurationManager
 		{
-			get { return configurationManager; }
+			get => configurationManager;
 			set
 			{
 				configurationManager = value;
@@ -150,12 +135,12 @@ namespace BetterConfigurationManager.MainToolWindow
 
 		private void OnConfigurationManagerSolutionContextChanged()
 		{
-			OnPropertyChanged("AvailableProjectConfigurationsInCurrentSolutionContext");
-			OnPropertyChanged("AvailableProjectPlatformsInCurrentSolutionContext");
-			OnPropertyChanged("BuildEveryProjectInCurrentSolutionContext");
-			OnPropertyChanged("DeployEveryProjectInCurrentSolutionContext");
-			OnPropertyChanged("ConfigurationForEveryProjectInCurrentSolutionContext");
-			OnPropertyChanged("PlatformForEveryProjectInCurrentSolutionContext");
+			OnPropertyChanged(nameof(AvailableProjectConfigurationsInCurrentSolutionContext));
+			OnPropertyChanged(nameof(AvailableProjectPlatformsInCurrentSolutionContext));
+			OnPropertyChanged(nameof(BuildEveryProjectInCurrentSolutionContext));
+			OnPropertyChanged(nameof(DeployEveryProjectInCurrentSolutionContext));
+			OnPropertyChanged(nameof(ConfigurationForEveryProjectInCurrentSolutionContext));
+			OnPropertyChanged(nameof(PlatformForEveryProjectInCurrentSolutionContext));
 		}
 
 		public bool? BuildEveryProjectInCurrentSolutionContext
@@ -168,11 +153,8 @@ namespace BetterConfigurationManager.MainToolWindow
 					Select(configuration => configuration.ShouldBuild).ToList();
 				return EvaluateShouldBuildOrShouldDeployFlags(shouldBuildFlags);
 			}
-			set
-			{
-				ApplyAction(GetActiveConfigurationForEveryProject(), c => c.IsBuildable,
-					c => c.ShouldBuild = value.Value);
-			}
+			set => ApplyAction(GetActiveConfigurationForEveryProject(), 
+				c => c.IsBuildable,	c => c.ShouldBuild = value.Value);
 		}
 
 		private static bool? EvaluateShouldBuildOrShouldDeployFlags(List<bool> flags)
@@ -186,10 +168,8 @@ namespace BetterConfigurationManager.MainToolWindow
 			return null;
 		}
 
-		private IEnumerable<Configuration> GetActiveConfigurationForEveryProject()
-		{
-			return ConfigurationManager.Projects.Select(p => p.ActiveConfiguration);
-		}
+		private IEnumerable<Configuration> GetActiveConfigurationForEveryProject() 
+			=> ConfigurationManager.Projects.Select(p => p.ActiveConfiguration);
 
 		public bool? DeployEveryProjectInCurrentSolutionContext
 		{
@@ -201,30 +181,19 @@ namespace BetterConfigurationManager.MainToolWindow
 					Select(configuration => configuration.ShouldDeploy).ToList();
 				return EvaluateShouldBuildOrShouldDeployFlags(shouldDeployFlags);
 			}
-			set
-			{
-				ApplyAction(GetActiveConfigurationForEveryProject(), c => c.IsDeployable,
-					c => c.ShouldDeploy = value.Value);
-			}
+			set => ApplyAction(GetActiveConfigurationForEveryProject(),
+				c => c.IsDeployable, c => c.ShouldDeploy = value.Value);
 		}
 
-		public IEnumerable<string> AvailableProjectConfigurationsInCurrentSolutionContext
-		{
-			get
-			{
-				return GetActiveConfigurationForEveryProject().
-					SelectMany(c => c.AvailableProjectConfigurations).Distinct();
-			}
-		}
+		public IEnumerable<string> AvailableProjectConfigurationsInCurrentSolutionContext 
+			=> GetActiveConfigurationForEveryProject()
+			.SelectMany(c => c.AvailableProjectConfigurations)
+			.Distinct();
 
-		public IEnumerable<string> AvailableProjectPlatformsInCurrentSolutionContext
-		{
-			get
-			{
-				return GetActiveConfigurationForEveryProject().SelectMany(c => c.AvailableProjectPlatforms).
-					Distinct();
-			}
-		}
+		public IEnumerable<string> AvailableProjectPlatformsInCurrentSolutionContext 
+			=> GetActiveConfigurationForEveryProject()
+			.SelectMany(c => c.AvailableProjectPlatforms)
+			.Distinct();
 
 		public string ConfigurationForEveryProjectInCurrentSolutionContext
 		{
@@ -234,19 +203,12 @@ namespace BetterConfigurationManager.MainToolWindow
 					Select(c => c.ActiveConfiguration.ProjectConfiguration).ToList();
 				return AllItemsAreEqual(configurations) ? configurations[0] : null;
 			}
-			set
-			{
-				ApplyAction(GetActiveConfigurationForEveryProject(),
-					c => c.AvailableProjectConfigurations.Contains(value), c => c.ProjectConfiguration = value);
-			}
+			set => ApplyAction(GetActiveConfigurationForEveryProject(),
+				c => c.AvailableProjectConfigurations.Contains(value), c => c.ProjectConfiguration = value);
 		}
 
-		private static bool AllItemsAreEqual(List<string> items)
-		{
-			if (items.Count == 0)
-				return false;
-			return items.All(item => item == items[0]);
-		}
+		private static bool AllItemsAreEqual(List<string> items) 
+			=> items.Count != 0 && items.All(item => item == items[0]);
 
 		public string PlatformForEveryProjectInCurrentSolutionContext
 		{
@@ -256,11 +218,8 @@ namespace BetterConfigurationManager.MainToolWindow
 					configurationManager.Projects.Select(c => c.ActiveConfiguration.ProjectPlatform).ToList();
 				return AllItemsAreEqual(configurations) ? configurations[0] : null;
 			}
-			set
-			{
-				ApplyAction(GetActiveConfigurationForEveryProject(),
-					c => c.AvailableProjectPlatforms.Contains(value), c => c.ProjectPlatform = value);
-			}
+			set => ApplyAction(GetActiveConfigurationForEveryProject(),
+				c => c.AvailableProjectPlatforms.Contains(value), c => c.ProjectPlatform = value);
 		}
 	}
 }

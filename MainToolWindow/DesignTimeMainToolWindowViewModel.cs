@@ -51,10 +51,7 @@ namespace BetterConfigurationManager.MainToolWindow
 				Projects.Add(secondProject);
 			}
 
-			public override Task Reload()
-			{
-				return null;
-			}
+			public override Task Reload() => null;
 		}
 	}
 }
